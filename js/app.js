@@ -8,9 +8,9 @@ let playerTurn = null//1.2
 let winner = null//1.3
 /*------------------------ Cached Element References ------------------------*/
 
-squareOptions = document.querySelectorAll(".square")//2.1
-stateMessage = document.querySelector("#message")//2.2 
-resetBtn = document.getElementById("replay")
+squareOptions = document.querySelectorAll('.square')//2.1
+stateMessage = document.querySelector('#message')//2.2 
+resetBtn = document.getElementById('replay')
 /*----------------------------- Event Listeners -----------------------------*/
 squareOptions.forEach(function (idx) {
   idx.addEventListener('click', handleClick)
@@ -19,8 +19,8 @@ resetBtn.addEventListener('click', init)
 /*-------------------------------- Functions --------------------------------*/
 
 function init() {//3.1
-  boardArray = []
-  for (let i = 0; i < 9; i++) { boardArray[i] = null; } //3.2.1
+  boardArray = [null, null, null, null, null, null, null, null, null]
+  // for (let i = 0; i < 9; i++) { boardArray[i] = null; } //3.2.1
   playerTurn = 1//3.2.2
   winner = null//3.2.3
   render()//3.2.4
@@ -33,9 +33,9 @@ function render() {//3.3
     if (square === 1) {
       squareContent = 'X'
     } else if (square === -1) {
-      squareContent === 'O'
+      squareContent = 'O'
     } else if (square === null) {
-      squareContent === ''
+      squareContent = ''
     }
     squareOptions[index].textContent = squareContent
   })
@@ -43,16 +43,25 @@ function render() {//3.3
 }
 
 function getStateMessage() {//3.3.2
-  if (winner === null){
-    stateMessage.textContent = `It is ${playerTurn === 1 ? "X" : "O"}'s turn, Choose a square!`
-  } else if (winner === 'T'){
+  if (winner === null) {
+    stateMessage.textContent = `It is ${playerTurn === 1 ? 'X' : 'O'}'s turn, Choose a square!`
+  } else if (winner === 'T') {
     stateMessage.textContent = `It's a Tie, Try Again!`
   } else {
-    stateMessage.textContent =  `Good Job! ${winner === 1 ? "X" : "O"}  wins!!`
+    stateMessage.textContent = `Good Job! ${winner === 1 ? 'X' : 'O'}  wins!!`
   }
 }
 
-function handleClick() {
-
+function handleClick(evt) {
+  console.log(evt.target)
+  let squareIndex = parseInt(evt.target.id.replace('sq', ''))
+  console.log('handleClick', squareIndex)
+  if (boardArray[squareIndex]) {
+    return
+  }
+  boardArray[squareIndex] = playerTurn
+  playerTurn *= -1
+  console.log(playerTurn)
+  render()
 }
 
