@@ -29,6 +29,7 @@ function init() {//3.1
   boardArray = [null, null, null, null, null, null, null, null, null]//3.2.1 & 3.4
   playerTurn = 1//3.2.2
   winner = null//3.2.3
+  resetButton.setAttribute('hidden', true)
   render()//3.2.4
 }
 init()
@@ -45,6 +46,10 @@ function render() {//3.3
     }
     squareOptions[index].textContent = squareContent
   })
+  if (boardArray.includes(1 || -1)) {
+    resetButton.removeAttribute('hidden')
+  }
+  
   getStateMessage()//3.3.2
 }
 
