@@ -22,15 +22,37 @@ function init() {//3.1
   boardArray = []
   for (let i = 0; i < 9; i++) { boardArray[i] = null; } //3.2.1
   playerTurn = 1//3.2.2
-  playerTurn = 1//3.2.2
-  render()
+  winner = null//3.2.3
+  render()//3.2.4
 }
 init()
 
-function render() {
+function render() {//3.3
+  boardArray.forEach(function (square, index) {//3.3.1
+    let squareContent
+    if (square === 1) {
+      squareContent = 'X'
+    } else if (square === -1) {
+      squareContent === 'O'
+    } else if (square === null) {
+      squareContent === ''
+    }
+    squareOptions[index].textContent = squareContent
+  })
+  getStateMessage()//3.3.2
+}
 
+function getStateMessage() {//3.3.2
+  if (winner === null){
+    stateMessage.textContent = `It is ${playerTurn === 1 ? "X" : "O"}'s turn, Choose a square!`
+  } else if (winner === 'T'){
+    stateMessage.textContent = `It's a Tie, Try Again!`
+  } else {
+    stateMessage.textContent =  `Good Job! ${winner === 1 ? "X" : "O"}  wins!!`
+  }
 }
 
 function handleClick() {
 
 }
+
