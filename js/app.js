@@ -1,13 +1,9 @@
 /*-------------------------------- Constants --------------------------------*/
 
-winCombos = [//4.1
-  //horizantal lines
-  [0, 1, 2], [3, 4, 5], [6, 7, 8]
-  //vertical lines
-  [0, 3, 6], [1, 4, 7], [2, 5, 8]
-  //diagonal lines
-  [0, 4, 8], [2, 4, 6]
-]
+
+
+
+
 
 /*---------------------------- Variables (state) ----------------------------*/
 let boardArray = []//1.1
@@ -15,9 +11,11 @@ let playerTurn = null//1.2
 let winner = null//1.3
 /*------------------------ Cached Element References ------------------------*/
 
-squareOptions = document.querySelectorAll('.square')//2.1
-stateMessage = document.querySelector('#message')//2.2 
-resetButton = document.getElementById('replay')//6.2
+let squareOptions = document.querySelectorAll('.square')//2.1
+let stateMessage = document.querySelector('#message')//2.2 
+let resetButton = document.getElementById('replay')//6.2
+let winSound = new Audio("sounds/win-yay.wav")// win audio 
+let TieSound = new Audio("sounds/tie-boo.wav")//tie audio
 /*----------------------------- Event Listeners -----------------------------*/
 squareOptions.forEach(function (index) {
   index.addEventListener('click', handleClick)
@@ -29,8 +27,11 @@ function init() {//3.1
   boardArray = [null, null, null, null, null, null, null, null, null]//3.2.1 & 3.4
   playerTurn = 1//3.2.2
   winner = null//3.2.3
-  resetButton.setAttribute('hidden', true)
   render()//3.2.4
+  winSound.pause()
+  TieSound.pause()
+  confetti.remove()
+  resetButton.style.visibility = 'hidden'
 }
 init()
 
@@ -47,9 +48,8 @@ function render() {//3.3
     squareOptions[index].textContent = squareContent
   })
   if (boardArray.includes(1 || -1)) {
-    resetButton.removeAttribute('hidden')
   }
-  
+  resetButton.style.visibility = 'visible'
   getStateMessage()//3.3.2
 }
 
@@ -58,8 +58,14 @@ function getStateMessage() {//3.3.2
     stateMessage.textContent = `It is ${playerTurn === 1 ? 'X' : 'O'}'s turn, Choose a square!`
   } else if (winner === 'T') {//3.3.2.2
     stateMessage.textContent = `It's a Tie, Try Again!`
+    TieSound.play()
+    TieSound.currentTime = 0
   } else {// 3.3.2.3
     stateMessage.textContent = `Good Job! ${winner === 1 ? 'X' : 'O'}  wins!!`
+    winSound.play()
+    winSound.currentTime = 0
+    confetti.start(2000)
+    confetti.start(5000)
   }
 }
 
