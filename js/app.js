@@ -15,7 +15,9 @@ let squareOptions = document.querySelectorAll('.square')//2.1
 let stateMessage = document.querySelector('#message')//2.2 
 let resetButton = document.getElementById('replay')//6.2
 let winSound = new Audio("sounds/win-yay.wav")// win audio 
+  winSound.volume = 0.1
 let TieSound = new Audio("sounds/tie-boo.wav")//tie audio
+  TieSound.volume = 0.1
 /*----------------------------- Event Listeners -----------------------------*/
 squareOptions.forEach(function (index) {
   index.addEventListener('click', handleClick)
