@@ -66,7 +66,6 @@ function getStateMessage() {//3.3.2
     stateMessage.textContent = `Good Job! ${winner === 1 ? 'X' : 'O'}  wins!!`
     winSound.play()
     winSound.currentTime = 0
-    confetti.start(2000)
     confetti.start(5000)
   }
 }
